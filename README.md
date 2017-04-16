@@ -38,6 +38,22 @@ $ evolution --outmonitor ~/agents2eps200 \
   --agents 2
 ```
 
+## example results
+<p align="center">
+  <img src="/averages.png" alt="cartpole average training example"/>
+</p>
+
+So, after 42 episodes, the 2 agents evolve enough to simply destroy at the game on
+their own. In this simple case, we apply a cutoff average reward of 195 or above
+for both agents, signifying the parameters on average should be able to solve
+the game with a single offspring. So we test that fact,
+
+<p align="center">
+  <img src="/averages.gif" alt="cartpole average evaluation example"/>
+</p>
+
+And it works! We get 198.5 average reward over 100 episodes!
+
 ## roadmap
 - [ ] Parallelize where needed to avoid embarrassment :smirk:
 - [ ] 32/64 bit support?
