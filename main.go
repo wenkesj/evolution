@@ -52,7 +52,8 @@ func main() {
 	var renderAgent, renderFinal bool
 	var numAgents, globalStepLimit, episodeLimit, testRuns int
 	var globalSeed int64
-	var noiseStdDeviation, l2Coefficient, stepSize, beta1, beta2, epsilon float64
+	var noiseStdDeviation, l2Coefficient, stepSize,
+	 	beta1, beta2, epsilon, cutoffEpoch float64
 
 	flag.StringVar(&baseURL, "url", "http://localhost:5000", "openai/gym-http-api url")
 	flag.StringVar(&environment, "env", "CartPole-v0", "openai/gym environment")
@@ -64,6 +65,7 @@ func main() {
 	flag.IntVar(&globalStepLimit, "steplimit", 100000, "openai/gym environment step limit")
 	flag.IntVar(&episodeLimit, "episodes", 100, "number of episodes to run")
 	flag.IntVar(&testRuns, "finalepisodes", 5, "number of episodes to run after training")
+	flag.Float64Var(&cutoffEpoch, "cutoff", 180.0, "average agent cutoff training")
 	flag.Float64Var(&noiseStdDeviation, "std", 0.02, "noise standard deviation")
 	flag.Float64Var(&l2Coefficient, "l2", 0.005, "l2 regularization coefficient")
 	flag.Float64Var(&stepSize, "stepsize", 0.01, "optimizer stepsize")
@@ -218,7 +220,7 @@ func main() {
 
 		// Update the parameters from the deltas
 		params = optimizer.Update(deltas, params)
-		if averageEpoch >= 190.0 {
+		if averageEpoch >= cutoffEpoch {
 			break
 		}
 	} // end episode

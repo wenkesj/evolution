@@ -18,7 +18,7 @@ func New(seed int64, size int) *NoiseTable {
 	r := rand.New(rand.NewSource(seed))
 	table := make([]float64, size)
 	for i := 0; i < size; i++ {
-		table[i] = 2*r.Float64() - 1
+		table[i] = r.NormFloat64()
 	}
 	return &NoiseTable{
 		noise: anyvec64.MakeVectorData(anyvec64.MakeNumericList(table)),
